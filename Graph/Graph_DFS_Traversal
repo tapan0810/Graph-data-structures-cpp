@@ -1,0 +1,78 @@
+using namespace std;
+#include<iostream>
+#include<unordered_map>
+#include<vector>
+#include<queue>
+
+
+class Graph{
+    
+    public:
+        unordered_map<int,vector<int>> adjList;
+        
+        void addEdge(int u,int v){
+            adjList[u].push_back(v);
+        }
+        
+ void dfsHelper(int src,unordered_map<int ,bool> &vis){
+    //ans print kro
+    //visited mark kro
+    
+    cout<<src << ", ";
+    vis[src] = true;
+    
+    //current node se iske nbr ko call maro
+    for(auto nbr : adjList[src]){
+        //agar nbr visited nehi h then dfs call kro
+        
+        if(!vis[nbr]){
+            dfsHelper(nbr,vis);
+        }
+    }
+}
+
+void DFSTraversal(int src, int node){
+    unordered_map<int ,bool> vis;
+    
+    //to traverse all the components of the graph
+    for(int i=0;i<node;i++){
+        if(!vis[src]){
+            dfsHelper(i,vis);
+        }
+    }
+}
+    
+};
+
+
+int main(){
+    
+    
+    Graph g;
+    
+    g.addEdge(0,1);
+    g.addEdge(1,2);
+    g.addEdge(2,4);
+    g.addEdge(4,3);
+    g.addEdge(4,5);
+    g.addEdge(5,6);
+    g.addEdge(5,7);
+    
+    g.DFSTraversal(0,7);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
