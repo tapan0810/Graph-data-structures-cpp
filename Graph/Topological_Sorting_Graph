@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include<queue>
+
+using namespace std;
+class Graph{
+    public:
+        unordered_map<int,vector<int>> adjList;
+        unordered_map<int,int> indegree;
+        
+        void addEdge(int u ,int v){
+            adjList[u].push_back(v);
+            indegree[v]++;
+        }
+        
+        void TopoSort(){
+            
+            queue<int> q;
+            
+            for(auto it : adjList){
+                int node = it.first;
+                
+                if(indegree[node] == 0){
+                    q.push(node);
+                }
+            }
+            
+            while(!q.empty()){
+                int front = q.front();
+                q.pop();
+                cout<<front<<" ";
+                
+                for(auto nbr : adjList[front]){
+                    indegree[nbr]--;
+                    
+                    if(indegree[nbr] == 0){
+                        q.push(nbr);
+                    }
+                }
+            }
+        }
+    
+};
+
+int main(){
+    
+    Graph g;
+    
+    g.addEdge(5, 0);
+    g.addEdge(5, 2);
+    g.addEdge(4, 0);
+    g.addEdge(4, 1);
+    g.addEdge(2, 3);
+    g.addEdge(3, 1);
+
+    g.TopoSort();
+    
+}
